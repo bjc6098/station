@@ -1,7 +1,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>업데이트6</title>
+    <title>업데이트7</title>
 	
  <style>
 .map_wrap, .map_wrap * {margin:0;padding:0;font-family:'Malgun Gothic',dotum,'돋움',sans-serif;font-size:12px;}
@@ -69,8 +69,11 @@ var polyline2 = new kakao.maps.Polyline({
       strokeStyle: 'solid' // 선의 스타일입니다
   });
 polyline2.setMap(map);
-    
 
+var info = new kakao.maps.InfoWindow({
+content: '<div style="width:150px;text-align:center;padding:6px 0;">test</div>'
+});
+	
 var geocoder = new kakao.maps.services.Geocoder();
 	
 function searchPlaces() {
@@ -93,12 +96,15 @@ function searchPlaces() {
             map: map,
             position: coords
         });
+	     
+	     info.close();
 
         // 인포윈도우로 장소에 대한 설명을 표시합니다
         var infowindow = new kakao.maps.InfoWindow({
             content: '<div style="width:150px;text-align:center;padding:6px 0;">'+keyword+'</div>'
         });
         infowindow.open(map, marker);
+	info = infowindow;
 
         // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
         map.setCenter(coords);
