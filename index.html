@@ -73,6 +73,10 @@ polyline2.setMap(map);
 var info = new kakao.maps.InfoWindow({
 content: '<div style="width:150px;text-align:center;padding:6px 0;">test</div>'
 });
+var mark = new kakao.maps.Marker({
+            map: map,
+            position: new kakao.maps.LatLng(37.391731, 126.742691)
+        });
 	
 var geocoder = new kakao.maps.services.Geocoder();
 	
@@ -96,7 +100,7 @@ function searchPlaces() {
             map: map,
             position: coords
         });
-	     
+	     mark.setMap(false);
 	     info.close();
 
         // 인포윈도우로 장소에 대한 설명을 표시합니다
@@ -105,6 +109,7 @@ function searchPlaces() {
         });
         infowindow.open(map, marker);
 	info = infowindow;
+	     mark = marker;
 
         // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
         map.setCenter(coords);
