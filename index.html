@@ -1,7 +1,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>업데이트22</title>
+    <title>업데이트23</title>
 	
  <style>
 	 
@@ -160,11 +160,11 @@ var pangyo_line = new kakao.maps.Polyline({
 pangyo_line.setMap(map);
 	
 for(var i = 0; i < pangyo.length ; i++){
-var content = '<div class ="label"><span class="left"></span><span class="center">'pangyo_name[i]'</span><span class="right"></span></div>';	
+var pangyo_linename = '<div class ="label"><span class="left"></span><span class="center">'pangyo_name[i]'</span><span class="right"></span></div>';	
 	
 var customOverlay = new kakao.maps.CustomOverlay({
-    position: panhyo[i],
-    content: content   
+    position: pangyo[i],
+    content: pangyo_linename  
 });
 	
 	customOverlay.setMap(map);
