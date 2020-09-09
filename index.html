@@ -111,7 +111,7 @@ function searchPlaces() {
      if (status === kakao.maps.services.Status.OK) {
 
         var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-	     var closedistance = 9999;
+	     var closedistance = 9999999;
 	      var point2 = new kakao.maps.LatLng(result[0].y, result[0].x);
 	     
 	     for(var i = 0; i < pangyo.length ; i++)
