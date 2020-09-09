@@ -1,7 +1,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>업데이트24</title>
+    <title>업데이트25</title>
 	
  <style>
 	 
@@ -335,8 +335,59 @@ function searchPlaces() {
 			     closedistance = distance;
 			     point2 = pangyo[i];
 		     }
-
 	     }
+	     
+	     
+	     for(var i = 0; i < dongtan.length ; i++)
+	     {
+		     var distpoint = new Array();
+		     distpoint.push(coords);
+		     distpoint.push(dongtan[i]);
+		     
+		     var distline = new kakao.maps.Polyline({
+  		    path: distpoint, // 선을 구성하는 좌표배열 입니다
+    		    endArrow: false,
+   		   strokeWeight: 3, // 선의 두께 입니다
+   		   strokeColor: '#75B8FA', // 선의 색깔입니다
+   		   strokeOpacity: 0.8, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+    		  strokeStyle: 'solid' // 선의 스타일입니다
+ 		 });
+		     
+		     var distance = Math.round(distline.getLength());
+		     
+		     if(closedistance >distance )
+		     {
+			     closedistance = distance;
+			     point2 = dongtan[i];
+		     }
+	     }
+	     
+	     for(var i = 0; i < sockcho.length ; i++)
+	     {
+		     var distpoint = new Array();
+		     distpoint.push(coords);
+		     distpoint.push(sockcho[i]);
+		     
+		     var distline = new kakao.maps.Polyline({
+  		    path: distpoint, // 선을 구성하는 좌표배열 입니다
+    		    endArrow: false,
+   		   strokeWeight: 3, // 선의 두께 입니다
+   		   strokeColor: '#75B8FA', // 선의 색깔입니다
+   		   strokeOpacity: 0.8, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+    		  strokeStyle: 'solid' // 선의 스타일입니다
+ 		 });
+		     
+		     var distance = Math.round(distline.getLength());
+		     
+		     if(closedistance >distance )
+		     {
+			     closedistance = distance;
+			     point2 = sockcho[i];
+		     }
+	     }
+	     
+	     
+	     
 	     
 	     
 	     
