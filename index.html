@@ -93,7 +93,14 @@ var distanceOverlay; // 선의 거리정보를 표시할 커스텀오버레이 �
 var dots = {}; // 선이 그려지고 있을때 클릭할 때마다 클릭 지점과 거리를 표시하는 커스텀 오버레이 배열입니다.
 	
 	
-var clickLine;
+var clickLine = new kakao.maps.Polyline({
+      path: pangyo, // 선을 구성하는 좌표배열 입니다
+      endArrow: false,
+      strokeWeight: 3, // 선의 두께 입니다
+      strokeColor: '#75B8FA', // 선의 색깔입니다
+      strokeOpacity: 0.8, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+      strokeStyle: 'solid' // 선의 스타일입니다
+  });
 		
 var geocoder = new kakao.maps.services.Geocoder();
 	
@@ -144,6 +151,9 @@ function searchPlaces() {
 	      var point = new Array();
 	     point.push(coords);
 	     point.push(point2);
+	     
+	     
+	     clickLine.setMap(false);
 
 	    clickLine = new kakao.maps.Polyline({
             path: point, // 선을 구성하는 좌표 배열입니다 클릭한 위치를 넣어줍니다
@@ -163,12 +173,6 @@ function searchPlaces() {
             // 그려진 선의 거리정보를 지도에 표시합니다
             showDistance(content, coords);  
 	     
-	     alert(distance);
-	     
-	     
-	     
-	     
-
         // 결과값으로 받은 위치를 마커로 표시합니다
         var marker = new kakao.maps.Marker({
             map: map,
@@ -187,6 +191,7 @@ function searchPlaces() {
 
         // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
         map.setCenter(coords);
+	map.setLevel(12);
     } 
 });    
 }
