@@ -61,13 +61,55 @@ var mapContainer = document.getElementById('map'), // 지도를 표시할 div
 // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
 var map = new kakao.maps.Map(mapContainer, mapOption); 
     
-    
+var pangyo_name = new Array();
+pangyo_name.push('월곶');
+	pangyo_name.push('장곡');
+	pangyo_name.push('시흥시청');
+	pangyo_name.push('매화');
+	pangyo_name.push('학온');
+	pangyo_name.push('광명');
+	pangyo_name.push('만안');
+	pangyo_name.push('안양');
+	pangyo_name.push('안양운동장');
+	pangyo_name.push('인덕원');
+	pangyo_name.push('청계');
+	pangyo_name.push('서판교');
+	pangyo_name.push('이매');
+	pangyo_name.push('삼동');
+	pangyo_name.push('광주');
+	pangyo_name.push('대쌍');
+	pangyo_name.push('곤지암');
+	pangyo_name.push('신둔');
+	pangyo_name.push('이천');
+	pangyo_name.push('부발');
+	pangyo_name.push('능서');
+	pangyo_name.push('여주');
+	
+	
 var pangyo = new Array();
 pangyo.push(new kakao.maps.LatLng( 37.391731 , 126.742691 ));
 pangyo.push(new kakao.maps.LatLng( 37.379159 , 126.788957 ));
 pangyo.push(new kakao.maps.LatLng( 37.381456 , 126.806373 ));
 pangyo.push(new kakao.maps.LatLng( 37.407128 , 126.816511 ));
-
+	pangyo.push(new kakao.maps.LatLng( 37.411288	,126.848140));
+	pangyo.push(new kakao.maps.LatLng( 37.416163	,126.884706));
+	pangyo.push(new kakao.maps.LatLng( 37.412955	,126.909712));
+	pangyo.push(new kakao.maps.LatLng( 37.400073	,126.920401));
+	pangyo.push(new kakao.maps.LatLng( 37.401775	,126.950100));
+	pangyo.push(new kakao.maps.LatLng( 37.400737	,126.976808));
+	pangyo.push(new kakao.maps.LatLng( 37.388563	,127.000039));
+	pangyo.push(new kakao.maps.LatLng( 37.391714	,127.075971));
+	pangyo.push(new kakao.maps.LatLng( 37.394842	,127.111229));
+	pangyo.push(new kakao.maps.LatLng( 37.395775	,127.128289));
+	pangyo.push(new kakao.maps.LatLng( 37.410965	,127.202722));
+	pangyo.push(new kakao.maps.LatLng( 37.397372	,127.256872));
+	pangyo.push(new kakao.maps.LatLng( 37.370038	,127.303119));
+	pangyo.push(new kakao.maps.LatLng( 37.350445	,127.346275));
+	pangyo.push(new kakao.maps.LatLng( 37.315523	,127.405288));
+	pangyo.push(new kakao.maps.LatLng( 37.244905	,127.437109));
+	pangyo.push(new kakao.maps.LatLng( 37.260330	,127.490257));
+	pangyo.push(new kakao.maps.LatLng( 37.293665	,127.570560));
+	pangyo.push(new kakao.maps.LatLng( 37.282579	,127.628668));
 	
 var polyline2 = new kakao.maps.Polyline({
       path: pangyo, // 선을 구성하는 좌표배열 입니다
