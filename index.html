@@ -68,7 +68,8 @@ var mapContainer = document.getElementById('map'), // 지도를 표시할 div
     };
 // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
 var map = new kakao.maps.Map(mapContainer, mapOption); 
-    
+var customOverlays = new Array();
+	
 var pangyo_name = new Array();
 pangyo_name.push('월곶');
 	pangyo_name.push('장곡');
@@ -159,9 +160,9 @@ var pangyo_line = new kakao.maps.Polyline({
   });
 pangyo_line.setMap(map);
 	
-	/*
+
 for(var i = 0; i < pangyo.length ; i++){
-var pangyo_linename = '<div class ="label"><span class="left"></span><span class="center">'pangyo_name[i]'</span><span class="right"></span></div>';	
+var pangyo_linename = '<div class ="label"><span class="left"></span><span class="center">'+pangyo_name[i]+'</span><span class="right"></span></div>';	
 	
 var customOverlay = new kakao.maps.CustomOverlay({
     position: pangyo[i],
@@ -169,8 +170,9 @@ var customOverlay = new kakao.maps.CustomOverlay({
 });
 	
 	customOverlay.setMap(map);
+	customOverlays.push(customOverlay);  
 }
-*/
+
 	
 	
 	
