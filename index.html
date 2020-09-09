@@ -1,9 +1,17 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>업데이트21</title>
+    <title>업데이트22</title>
 	
  <style>
+	 
+.label {margin-bottom: 96px;}
+.label * {display: inline-block;vertical-align: top;}
+.label .left {background: url("https://t1.daumcdn.net/localimg/localimages/07/2011/map/storeview/tip_l.png") no-repeat;display: inline-block;height: 24px;overflow: hidden;vertical-align: top;width: 7px;}
+.label .center {background: url(https://t1.daumcdn.net/localimg/localimages/07/2011/map/storeview/tip_bg.png) repeat-x;display: inline-block;height: 24px;font-size: 12px;line-height: 24px;}
+.label .right {background: url("https://t1.daumcdn.net/localimg/localimages/07/2011/map/storeview/tip_r.png") -1px 0  no-repeat;display: inline-block;height: 24px;overflow: hidden;width: 6px;}	 
+	 
+	 
 .dot {overflow:hidden;float:left;width:12px;height:12px;background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/mini_circle.png');}    
 .dotOverlay {position:relative;bottom:10px;border-radius:6px;border: 1px solid #ccc;border-bottom:2px solid #ddd;float:left;font-size:12px;padding:5px;background:#fff;}
 .dotOverlay:nth-of-type(n) {border:0; box-shadow:0px 1px 2px #888;}    
@@ -150,6 +158,19 @@ var pangyo_line = new kakao.maps.Polyline({
       strokeStyle: 'solid' // 선의 스타일입니다
   });
 pangyo_line.setMap(map);
+	
+for(var i = 0; i < pangyo.length ; i++){
+var content = '<div class ="label"><span class="left"></span><span class="center">'pangyo_name[i]'</span><span class="right"></span></div>';	
+	
+var customOverlay = new kakao.maps.CustomOverlay({
+    position: panhyo[i],
+    content: content   
+});
+	
+	customOverlay.setMap(map);
+}
+
+	
 	
 	
 var dongtan = new Array();
