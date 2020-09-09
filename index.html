@@ -86,6 +86,36 @@ pangyo_name.push('월곶');
 	pangyo_name.push('여주');
 	
 	
+	
+var dongtan_name = new Array();
+dongtan_name.push('인덕원');
+dongtan_name.push('내손');	
+dongtan_name.push('호계사거리');	
+dongtan_name.push('오전');
+	dongtan_name.push('고천');
+	dongtan_name.push('파장');
+	dongtan_name.push('수원야구장');
+	dongtan_name.push('수원월드컵경기장');
+	dongtan_name.push('아주대입구');
+	dongtan_name.push('원천');
+	dongtan_name.push('흥덕');
+	dongtan_name.push('영통');
+	dongtan_name.push('서천');
+	dongtan_name.push('기산반월');
+	dongtan_name.push('능동');
+	dongtan_name.push('반송');
+	dongtan_name.push('동탄');
+	dongtan_name.push('서동탄');
+	
+	
+var sockcho_name = new Array();
+sockcho_name.push('춘천');
+	sockcho_name.push('화천');
+	sockcho_name.push('양구');
+	sockcho_name.push('인제');
+	sockcho_name.push('속초');
+	
+	
 var pangyo = new Array();
 pangyo.push(new kakao.maps.LatLng( 37.391731 , 126.742691 ));
 pangyo.push(new kakao.maps.LatLng( 37.379159 , 126.788957 ));
@@ -111,7 +141,7 @@ pangyo.push(new kakao.maps.LatLng( 37.407128 , 126.816511 ));
 	pangyo.push(new kakao.maps.LatLng( 37.293665	,127.570560));
 	pangyo.push(new kakao.maps.LatLng( 37.282579	,127.628668));
 	
-var polyline2 = new kakao.maps.Polyline({
+var pangyo_line = new kakao.maps.Polyline({
       path: pangyo, // 선을 구성하는 좌표배열 입니다
       endArrow: false,
       strokeWeight: 3, // 선의 두께 입니다
@@ -119,7 +149,72 @@ var polyline2 = new kakao.maps.Polyline({
       strokeOpacity: 0.8, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
       strokeStyle: 'solid' // 선의 스타일입니다
   });
-polyline2.setMap(map);
+pangyo_line.setMap(map);
+	
+	
+var dongtan = new Array();
+dongtan.push(new kakao.maps.LatLng(37.400737,126.976808 ));
+	dongtan.push(new kakao.maps.LatLng(37.383878,	126.972472));
+	dongtan.push(new kakao.maps.LatLng(37.371139,	126.960877 ));
+	dongtan.push(new kakao.maps.LatLng(37.358906,	126.96527));
+	dongtan.push(new kakao.maps.LatLng(37.34738,	126.974457 ));
+	dongtan.push(new kakao.maps.LatLng(37.311982,	126.989802 ));
+	dongtan.push(new kakao.maps.LatLng(37.302741,	127.007555));
+	dongtan.push(new kakao.maps.LatLng(37.285089,	127.035641 ));
+	dongtan.push(new kakao.maps.LatLng(37.274258,	127.045528));
+	dongtan.push(new kakao.maps.LatLng(37.270984,	127.059378 ));
+	dongtan.push(new kakao.maps.LatLng(37.276221,	127.072654 ));
+	dongtan.push(new kakao.maps.LatLng(37.25149,	127.07128));
+	dongtan.push(new kakao.maps.LatLng(37.236853,	127.07209 ));
+	dongtan.push(new kakao.maps.LatLng(37.226576,	127.060204 ));
+	dongtan.push(new kakao.maps.LatLng(37.21201,	127.054511 ));
+	dongtan.push(new kakao.maps.LatLng(37.206288,	127.068346));
+	dongtan.push(new kakao.maps.LatLng(37.199772,	127.096139 ));
+	dongtan.push(new kakao.maps.LatLng(37.195784,	127.051907 ));
+	
+
+	var dongtan_line = new kakao.maps.Polyline({
+      path: dongtan, // 선을 구성하는 좌표배열 입니다
+      endArrow: false,
+      strokeWeight: 3, // 선의 두께 입니다
+      strokeColor: '#75B8FA', // 선의 색깔입니다
+      strokeOpacity: 0.8, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+      strokeStyle: 'solid' // 선의 스타일입니다
+  });
+dongtan_line.setMap(map);
+	
+	
+var sockcho = new Array();
+sockcho.push(new kakao.maps.LatLng(37.884878,	127.716937 ));
+	sockcho.push(new kakao.maps.LatLng(38.036147	,127.815992));
+	sockcho.push(new kakao.maps.LatLng(38.094863	,127.990603 ));
+	sockcho.push(new kakao.maps.LatLng(38.112839	,128.20051 ));
+	sockcho.push(new kakao.maps.LatLng(38.194126	,128.580571 ));
+	
+	
+var sockcho_line = new kakao.maps.Polyline({
+      path: sockcho, // 선을 구성하는 좌표배열 입니다
+      endArrow: false,
+      strokeWeight: 3, // 선의 두께 입니다
+      strokeColor: '#75B8FA', // 선의 색깔입니다
+      strokeOpacity: 0.8, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+      strokeStyle: 'solid' // 선의 스타일입니다
+  });
+sockcho_line.setMap(map);	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 var info = new kakao.maps.InfoWindow({
 content: '<div style="width:150px;text-align:center;padding:6px 0;">test</div>'
