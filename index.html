@@ -211,6 +211,20 @@ dongtan.push(new kakao.maps.LatLng(37.400737,126.976808 ));
   });
 dongtan_line.setMap(map);
 	
+for(var i = 0; i < dongtan.length ; i++){
+	
+var dongtan_linename = '<div class ="label"><span class="left"></span><span class="center">'+dongtan_name[i]+'</span><span class="right"></span></div>';	
+	
+var customOverlay = new kakao.maps.CustomOverlay({
+    position: dongtan[i],
+    content: dongtan_linename  
+});
+	
+	customOverlay.setMap(map);
+	customOverlays.push(customOverlay);  
+	
+	displayCircleDot(dongtan[i]);
+}
 	
 var sockcho = new Array();
 sockcho.push(new kakao.maps.LatLng(37.884878,	127.716937 ));
@@ -230,7 +244,20 @@ var sockcho_line = new kakao.maps.Polyline({
   });
 sockcho_line.setMap(map);	
 	
+for(var i = 0; i < sockcho.length ; i++){
 	
+var sockcho_linename = '<div class ="label"><span class="left"></span><span class="center">'+ sockcho_name[i]+'</span><span class="right"></span></div>';	
+	
+var customOverlay = new kakao.maps.CustomOverlay({
+    position: sockcho[i],
+    content: sockcho_linename  
+});
+	
+	customOverlay.setMap(map);
+	customOverlays.push(customOverlay);  
+	
+	displayCircleDot(sockcho[i]);
+}	
 	
 	
 	
