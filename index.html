@@ -272,16 +272,6 @@ var customOverlay = new kakao.maps.CustomOverlay({
 }	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 var info = new kakao.maps.InfoWindow({
 content: '<div style="width:150px;text-align:center;padding:6px 0;">test</div>'
@@ -446,7 +436,12 @@ function searchPlaces() {
         // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
         map.setCenter(coords);
 	map.setLevel(8);
-    } 
+    }
+	    else{
+		    
+		    alert("정상적인 주소를 입력하세요");
+	    }
+	    
 });    
 }
 	
