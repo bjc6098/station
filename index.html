@@ -1,164 +1,150 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>역세권시뮬레이션24</title>
-	
+    <title>역세권시뮬레이션25</title>
+
  <style>
-	 
+
 .label {margin-bottom: 40px;}
 .label * {display: inline-block;vertical-align: top;}
 .label .left {background: url("https://t1.daumcdn.net/localimg/localimages/07/2011/map/storeview/tip_l.png") no-repeat;display: inline-block;height: 24px;overflow: hidden;vertical-align: top;width: 7px;}
 .label .center {background: url(https://t1.daumcdn.net/localimg/localimages/07/2011/map/storeview/tip_bg.png) repeat-x;display: inline-block;height: 24px;font-size: 12px;line-height: 24px;}
-.label .right {background: url("https://t1.daumcdn.net/localimg/localimages/07/2011/map/storeview/tip_r.png") -1px 0  no-repeat;display: inline-block;height: 24px;overflow: hidden;width: 6px;}	 
-	 
-	 
-.dot {overflow:hidden;float:left;width:12px;height:12px;background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/mini_circle.png');}    
+.label .right {background: url("https://t1.daumcdn.net/localimg/localimages/07/2011/map/storeview/tip_r.png") -1px 0  no-repeat;display: inline-block;height: 24px;overflow: hidden;width: 6px;}
+
+
+.dot {overflow:hidden;float:left;width:12px;height:12px;background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/mini_circle.png');}
 .dotOverlay {position:relative;bottom:10px;border-radius:6px;border: 1px solid #ccc;border-bottom:2px solid #ddd;float:left;font-size:12px;padding:5px;background:#fff;}
-.dotOverlay:nth-of-type(n) {border:0; box-shadow:0px 1px 2px #888;}    
+.dotOverlay:nth-of-type(n) {border:0; box-shadow:0px 1px 2px #888;}
 .number {font-weight:bold;color:#ee6152;}
 .dotOverlay:after {content:'';position:absolute;margin-left:-6px;left:50%;bottom:-8px;width:11px;height:8px;background:url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white_small.png')}
 .distanceInfo {position:relative;top:5px;left:5px;list-style:none;margin:0;}
 .distanceInfo .label {display:inline-block;width:50px;}
 .distanceInfo:after {content:none;}
-	 
+
 .map_wrap, .map_wrap * {margin:0;padding:0;font-family:'Malgun Gothic',dotum,'돋움',sans-serif;font-size:15px;}
 .map_wrap a, .map_wrap a:hover, .map_wrap a:active{color:#000;text-decoration: none;}
 #menu_wrap {position:absolute;top:0;left:0;bottom:0;width:300px;height:100px;margin:15px 0 0 10px;padding:5px;overflow-y:auto;background:rgba(255, 255, 255, 1);z-index: 1;font-size:15px;border-radius: 10px;}
 .bg_white {background:#fff;}
 #menu_wrap hr {display: block; height: 1px;border: 0; border-top: 2px solid #5F5F5F;margin:3px 0;}
 #menu_wrap .option{text-align: center;}
-#menu_wrap .option p {margin:15px 0;}  
+#menu_wrap .option p {margin:15px 0;}
 #menu_wrap .option button {margin:10px 0 0 0px;}
-	 
+
 #line_info {position:absolute;top:0;left:0;bottom:0;margin:10px 0 0 330px;padding:5px;z-index: 1;border-radius: 10px;}
-</style>   
-    
+</style>
+
 <style>
  html, body {margin: 0;padding: 0;height: 100%;}
 </style>
-    
+
 </head>
 <body>
 <div id="map" style="width:100%;height:100%;">
 	</div>
-	
+
 <div class="map_wrap" style="width:100%;height:100%;">
  <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;">
 	</div>
-		
-	
+
+
  <div id="menu_wrap" class="bg_white">
 
         <div class="option">
             <div>
                 <form onsubmit="searchPlaces(); return false;">
-                    주소검색 : <input type="text" value="경기도" id="keyword" size="20"> 
-                    <button type="submit">검색하기</button> 
+                    주소검색 : <input type="text" value="경기도" id="keyword" size="20">
+                    <button type="submit">검색하기</button>
                 </form>
             </div>
         </div>
-    </div>	
-	
+    </div>
+
 	 <div id="line_info">
 <img src="info.png" width:200px height:200px>
 	</div>
 </div>
-	
 
-
-	
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=43dabc7e1a9f0a27c255f08840f28fd9&libraries=services"></script>
 <script>
-var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-    mapOption = { 
+
+
+<?php
+$jb_conn = mysqli_connect('devcoretec.iptime.org:3307','coretec','core4211','new_station');
+$jb_sql = "SELECT * FROM new_station.tb_station_line;";
+$jb_result = mysqli_query( $jb_conn, $jb_sql );
+$jb_num = mysqli_num_rows($jb_result);
+
+$i = 0;
+
+$line_name = array();
+$names = array();
+$Lat = array();
+$Lng = array();
+
+for($i = 0 ; $i < $jb_num ; $i++)
+{
+  $jb_row = mysqli_fetch_array( $jb_result);
+
+  $line_name[$i] = $jb_row['line_name'];
+  $names[$i] = $jb_row['station_name'];
+  $Lat[$i] = $jb_row['latitude'];
+  $Lng[$i] = $jb_row['longitude'];
+}
+?>
+
+var testa = '<?php echo $jb_num;?>';
+
+var line_name = <?php echo json_encode($line_name)?>;
+var names = <?php echo json_encode($names)?>;
+var Lat = <?php echo json_encode($Lat)?>;
+var Lng = <?php echo json_encode($Lng)?>;
+
+var pangyo_name = new Array();
+var dongtan_name = new Array();
+var sockcho_name = new Array();
+
+var pangyo = new Array();
+var dongtan = new Array();
+var sockcho = new Array();
+
+for(var i = 0 ; i < testa ; i++)
+{
+  switch(line_name[i])
+  {
+  case '월곶-판교선':
+  pangyo_name.push(names[i]);
+  pangyo.push(new kakao.maps.LatLng(Lat[i], Lng[i]));
+  break;
+
+  case '인덕원-동탄선':
+  dongtan_name.push(names[i]);
+  dongtan.push(new kakao.maps.LatLng(Lat[i], Lng[i]));
+  break;
+
+  case '춘천-속초선':
+  sockcho_name.push(names[i]);
+  sockcho.push(new kakao.maps.LatLng(Lat[i], Lng[i]));
+  break;
+
+  }
+}
+
+
+
+var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+    mapOption = {
         center: new kakao.maps.LatLng(37.391731, 126.742691), // 지도의 중심좌표
         level: 3 // 지도의 확대 레벨
     };
 // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
-var map = new kakao.maps.Map(mapContainer, mapOption); 
-var customOverlays = new Array();
-	
-var pangyo_name = new Array();
-pangyo_name.push('월곶');
-	pangyo_name.push('장곡');
-	pangyo_name.push('시흥시청');
-	pangyo_name.push('매화');
-	pangyo_name.push('학온');
-	pangyo_name.push('광명');
-	pangyo_name.push('만안');
-	pangyo_name.push('안양');
-	pangyo_name.push('안양운동장');
-	pangyo_name.push('인덕원');
-	pangyo_name.push('청계');
-	pangyo_name.push('서판교');
-	pangyo_name.push('판교');
-	pangyo_name.push('이매');
-	pangyo_name.push('삼동');
-	pangyo_name.push('광주');
-	pangyo_name.push('대쌍');
-	pangyo_name.push('곤지암');
-	pangyo_name.push('신둔');
-	pangyo_name.push('이천');
-	pangyo_name.push('부발');
-	pangyo_name.push('능서');
-	pangyo_name.push('여주');
-	
-	
-	
-var dongtan_name = new Array();
-dongtan_name.push('인덕원');
-dongtan_name.push('내손');	
-dongtan_name.push('호계사거리');	
-dongtan_name.push('오전');
-	dongtan_name.push('고천');
-	dongtan_name.push('파장');
-	dongtan_name.push('수원야구장');
-	dongtan_name.push('수원월드컵경기장');
-	dongtan_name.push('아주대입구');
-	dongtan_name.push('원천');
-	dongtan_name.push('흥덕');
-	dongtan_name.push('영통');
-	dongtan_name.push('서천');
-	dongtan_name.push('기산반월');
-	dongtan_name.push('능동');
-	dongtan_name.push('반송');
-	dongtan_name.push('동탄');
-	dongtan_name.push('서동탄');
-	
-	
-var sockcho_name = new Array();
-sockcho_name.push('춘천');
-	sockcho_name.push('화천');
-	sockcho_name.push('양구');
-	sockcho_name.push('인제');
-	sockcho_name.push('속초');
-	
-	
-var pangyo = new Array();
-pangyo.push(new kakao.maps.LatLng( 37.391731 , 126.742691 ));
-pangyo.push(new kakao.maps.LatLng( 37.379159 , 126.788957 ));
-pangyo.push(new kakao.maps.LatLng( 37.381456 , 126.806373 ));
-pangyo.push(new kakao.maps.LatLng( 37.407128 , 126.816511 ));
-	pangyo.push(new kakao.maps.LatLng( 37.411288	,126.848140));
-	pangyo.push(new kakao.maps.LatLng( 37.416163	,126.884706));
-	pangyo.push(new kakao.maps.LatLng( 37.412955	,126.909712));
-	pangyo.push(new kakao.maps.LatLng( 37.400073	,126.920401));
-	pangyo.push(new kakao.maps.LatLng( 37.401775	,126.950100));
-	pangyo.push(new kakao.maps.LatLng( 37.400737	,126.976808));
-	pangyo.push(new kakao.maps.LatLng( 37.388563	,127.000039));
-	pangyo.push(new kakao.maps.LatLng( 37.391714	,127.075971));
-	pangyo.push(new kakao.maps.LatLng( 37.394842	,127.111229));
-	pangyo.push(new kakao.maps.LatLng( 37.395775	,127.128289));
-	pangyo.push(new kakao.maps.LatLng( 37.410965	,127.202722));
-	pangyo.push(new kakao.maps.LatLng( 37.397372	,127.256872));
-	pangyo.push(new kakao.maps.LatLng( 37.370038	,127.303119));
-	pangyo.push(new kakao.maps.LatLng( 37.350445	,127.346275));
-	pangyo.push(new kakao.maps.LatLng( 37.315523	,127.405288));
-	pangyo.push(new kakao.maps.LatLng( 37.244905	,127.437109));
-	pangyo.push(new kakao.maps.LatLng( 37.260330	,127.490257));
-	pangyo.push(new kakao.maps.LatLng( 37.293665	,127.570560));
-	pangyo.push(new kakao.maps.LatLng( 37.282579	,127.628668));
-	
+var map = new kakao.maps.Map(mapContainer, mapOption);
+
+
+var customOverlays = new Array(); // 역 이름 오버레이 배열
+
+
+
+
 var pangyo_line = new kakao.maps.Polyline({
       path: pangyo, // 선을 구성하는 좌표배열 입니다
       endArrow: false,
@@ -168,47 +154,26 @@ var pangyo_line = new kakao.maps.Polyline({
       strokeStyle: 'solid' // 선의 스타일입니다
   });
 pangyo_line.setMap(map);
-	
+
 
 for(var i = 0; i < pangyo.length ; i++){
-	
-	
-var pangyo_linename = '<div class ="label"><span class="left"></span><span class="center">'+pangyo_name[i]+'</span><span class="right"></span></div>';	
-	
+
+
+var pangyo_linename = '<div class ="label"><span class="left"></span><span class="center">'+pangyo_name[i]+'</span><span class="right"></span></div>';
+
 var customOverlay = new kakao.maps.CustomOverlay({
     position: pangyo[i],
-    content: pangyo_linename  
+    content: pangyo_linename
 });
-	
+
 	customOverlay.setMap(map);
-	customOverlays.push(customOverlay);  
-	
+	customOverlays.push(customOverlay);
+
 	displayCircleDot(pangyo[i]);
 }
 
-	
-	
-	
-var dongtan = new Array();
-dongtan.push(new kakao.maps.LatLng(37.400737,126.976808 ));
-	dongtan.push(new kakao.maps.LatLng(37.383878,	126.972472));
-	dongtan.push(new kakao.maps.LatLng(37.371139,	126.960877 ));
-	dongtan.push(new kakao.maps.LatLng(37.358906,	126.96527));
-	dongtan.push(new kakao.maps.LatLng(37.34738,	126.974457 ));
-	dongtan.push(new kakao.maps.LatLng(37.311982,	126.989802 ));
-	dongtan.push(new kakao.maps.LatLng(37.302741,	127.007555));
-	dongtan.push(new kakao.maps.LatLng(37.285089,	127.035641 ));
-	dongtan.push(new kakao.maps.LatLng(37.274258,	127.045528));
-	dongtan.push(new kakao.maps.LatLng(37.270984,	127.059378 ));
-	dongtan.push(new kakao.maps.LatLng(37.276221,	127.072654 ));
-	dongtan.push(new kakao.maps.LatLng(37.25149,	127.07128));
-	dongtan.push(new kakao.maps.LatLng(37.236853,	127.07209 ));
-	dongtan.push(new kakao.maps.LatLng(37.226576,	127.060204 ));
-	dongtan.push(new kakao.maps.LatLng(37.21201,	127.054511 ));
-	dongtan.push(new kakao.maps.LatLng(37.206288,	127.068346));
-	dongtan.push(new kakao.maps.LatLng(37.199772,	127.096139 ));
-	dongtan.push(new kakao.maps.LatLng(37.195784,	127.051907 ));
-	
+
+
 
 	var dongtan_line = new kakao.maps.Polyline({
       path: dongtan, // 선을 구성하는 좌표배열 입니다
@@ -219,30 +184,22 @@ dongtan.push(new kakao.maps.LatLng(37.400737,126.976808 ));
       strokeStyle: 'solid' // 선의 스타일입니다
   });
 dongtan_line.setMap(map);
-	
+
 for(var i = 0; i < dongtan.length ; i++){
-	
-var dongtan_linename = '<div class ="label"><span class="left"></span><span class="center">'+dongtan_name[i]+'</span><span class="right"></span></div>';	
-	
+
+var dongtan_linename = '<div class ="label"><span class="left"></span><span class="center">'+dongtan_name[i]+'</span><span class="right"></span></div>';
+
 var customOverlay = new kakao.maps.CustomOverlay({
     position: dongtan[i],
-    content: dongtan_linename  
+    content: dongtan_linename
 });
-	
+
 	customOverlay.setMap(map);
-	customOverlays.push(customOverlay);  
-	
+	customOverlays.push(customOverlay);
+
 	displayCircleDot(dongtan[i]);
 }
-	
-var sockcho = new Array();
-sockcho.push(new kakao.maps.LatLng(37.884878,	127.716937 ));
-	sockcho.push(new kakao.maps.LatLng(38.036147	,127.815992));
-	sockcho.push(new kakao.maps.LatLng(38.094863	,127.990603 ));
-	sockcho.push(new kakao.maps.LatLng(38.112839	,128.20051 ));
-	sockcho.push(new kakao.maps.LatLng(38.194126	,128.580571 ));
-	
-	
+
 var sockcho_line = new kakao.maps.Polyline({
       path: sockcho, // 선을 구성하는 좌표배열 입니다
       endArrow: false,
@@ -251,24 +208,24 @@ var sockcho_line = new kakao.maps.Polyline({
       strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
       strokeStyle: 'solid' // 선의 스타일입니다
   });
-sockcho_line.setMap(map);	
-	
+sockcho_line.setMap(map);
+
 for(var i = 0; i < sockcho.length ; i++){
-	
-var sockcho_linename = '<div class ="label"><span class="left"></span><span class="center">'+ sockcho_name[i]+'</span><span class="right"></span></div>';	
-	
+
+var sockcho_linename = '<div class ="label"><span class="left"></span><span class="center">'+ sockcho_name[i]+'</span><span class="right"></span></div>';
+
 var customOverlay = new kakao.maps.CustomOverlay({
     position: sockcho[i],
-    content: sockcho_linename  
+    content: sockcho_linename
 });
-	
+
 	customOverlay.setMap(map);
-	customOverlays.push(customOverlay);  
-	
+	customOverlays.push(customOverlay);
+
 	displayCircleDot(sockcho[i]);
-}	
-	
-	
+}
+
+
 
 var info = new kakao.maps.InfoWindow({
 content: '<div style="width:150px;text-align:center;padding:6px 0;">test</div>'
@@ -276,13 +233,13 @@ content: '<div style="width:150px;text-align:center;padding:6px 0;">test</div>'
 var mark = new kakao.maps.Marker({
             position: new kakao.maps.LatLng(37.391731, 126.742691)
         });
-	
+
 var drawingFlag = false; // 선이 그려지고 있는 상태를 가지고 있을 변수입니다
 var moveLine; // 선이 그려지고 있을때 마우스 움직임에 따라 그려질 선 객체 입니다
 var distanceOverlay; // 선의 거리정보를 표시할 커스텀오버레이 입니다
 var dots = {}; // 선이 그려지고 있을때 클릭할 때마다 클릭 지점과 거리를 표시하는 커스텀 오버레이 배열입니다.
-	
-	
+
+
 var clickLine = new kakao.maps.Polyline({
       path: pangyo, // 선을 구성하는 좌표배열 입니다
       endArrow: false,
@@ -291,9 +248,9 @@ var clickLine = new kakao.maps.Polyline({
       strokeOpacity: 0.8, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
       strokeStyle: 'solid' // 선의 스타일입니다
   });
-		
+
 var geocoder = new kakao.maps.services.Geocoder();
-	
+
 function searchPlaces() {
     var keyword = document.getElementById('keyword').value;
     if (!keyword.replace(/^\s+|\s+$/g, '')) {
@@ -304,19 +261,19 @@ function searchPlaces() {
     // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
     geocoder.addressSearch(keyword, function(result, status) {
 
-    // 정상적으로 검색이 완료됐으면 
+    // 정상적으로 검색이 완료됐으면
      if (status === kakao.maps.services.Status.OK) {
 
         var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
 	     var closedistance = 9999999;
 	      var point2 = new kakao.maps.LatLng(result[0].y, result[0].x);
-	     
+
 	     for(var i = 0; i < pangyo.length ; i++)
 	     {
 		     var distpoint = new Array();
 		     distpoint.push(coords);
 		     distpoint.push(pangyo[i]);
-		     
+
 		     var distline = new kakao.maps.Polyline({
   		    path: distpoint, // 선을 구성하는 좌표배열 입니다
     		    endArrow: false,
@@ -325,23 +282,23 @@ function searchPlaces() {
    		   strokeOpacity: 0.8, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
     		  strokeStyle: 'solid' // 선의 스타일입니다
  		 });
-		     
+
 		     var distance = Math.round(distline.getLength());
-		     
+
 		     if(closedistance >distance )
 		     {
 			     closedistance = distance;
 			     point2 = pangyo[i];
 		     }
 	     }
-	     
-	     
+
+
 	     for(var i = 0; i < dongtan.length ; i++)
 	     {
 		     var distpoint = new Array();
 		     distpoint.push(coords);
 		     distpoint.push(dongtan[i]);
-		     
+
 		     var distline = new kakao.maps.Polyline({
   		    path: distpoint, // 선을 구성하는 좌표배열 입니다
     		    endArrow: false,
@@ -350,22 +307,22 @@ function searchPlaces() {
    		   strokeOpacity: 0.8, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
     		  strokeStyle: 'solid' // 선의 스타일입니다
  		 });
-		     
+
 		     var distance = Math.round(distline.getLength());
-		     
+
 		     if(closedistance >distance )
 		     {
 			     closedistance = distance;
 			     point2 = dongtan[i];
 		     }
 	     }
-	     
+
 	     for(var i = 0; i < sockcho.length ; i++)
 	     {
 		     var distpoint = new Array();
 		     distpoint.push(coords);
 		     distpoint.push(sockcho[i]);
-		     
+
 		     var distline = new kakao.maps.Polyline({
   		    path: distpoint, // 선을 구성하는 좌표배열 입니다
     		    endArrow: false,
@@ -374,46 +331,46 @@ function searchPlaces() {
    		   strokeOpacity: 0.8, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
     		  strokeStyle: 'solid' // 선의 스타일입니다
  		 });
-		     
+
 		     var distance = Math.round(distline.getLength());
-		     
+
 		     if(closedistance >distance )
 		     {
 			     closedistance = distance;
 			     point2 = sockcho[i];
 		     }
 	     }
-	     
-	     
-	     
-	     
-	     
-	     
+
+
+
+
+
+
 	      var point = new Array();
 	     point.push(coords);
 	     point.push(point2);
-	     
-	     
+
+
 	     clickLine.setMap(false);
 
 	    clickLine = new kakao.maps.Polyline({
             path: point, // 선을 구성하는 좌표 배열입니다 클릭한 위치를 넣어줍니다
 	    endArrow: false,
-            strokeWeight: 3, // 선의 두께입니다 
+            strokeWeight: 3, // 선의 두께입니다
             strokeColor: '#db4040', // 선의 색깔입니다
             strokeOpacity: 1, // 선의 불투명도입니다 0에서 1 사이값이며 0에 가까울수록 투명합니다
             strokeStyle: 'solid' // 선의 스타일입니다
         });
-	     
+
 	     clickLine.setMap(map);
-	     
-	     
+
+
 	      var distance = Math.round(clickLine.getLength()); // 선의 총 거리를 계산합니다
               var content = getTimeHTML(closedistance); // 커스텀오버레이에 추가될 내용입니다
-                
+
             // 그려진 선의 거리정보를 지도에 표시합니다
-            showDistance(content, coords);  
-	     
+            showDistance(content, coords);
+
         // 결과값으로 받은 위치를 마커로 표시합니다
         var marker = new kakao.maps.Marker({
             map: map,
@@ -435,24 +392,24 @@ function searchPlaces() {
 	map.setLevel(8);
     }
 	    else{
-		    
+
 		    alert("정상적인 주소를 입력하세요");
 	    }
-	    
-});    
+
+});
 }
-	
-	
+
+
 function showDistance(content, position) {
-    
+
     if (distanceOverlay) { // 커스텀오버레이가 생성된 상태이면
-        
+
         // 커스텀 오버레이의 위치와 표시할 내용을 설정합니다
         distanceOverlay.setPosition(position);
         distanceOverlay.setContent(content);
-        
+
     } else { // 커스텀 오버레이가 생성되지 않은 상태이면
-        
+
         // 커스텀 오버레이를 생성하고 지도에 표시합니다
         distanceOverlay = new kakao.maps.CustomOverlay({
             map: map, // 커스텀오버레이를 표시할 지도입니다
@@ -460,11 +417,11 @@ function showDistance(content, position) {
             position: position, // 커스텀오버레이를 표시할 위치입니다.
             xAnchor: 0,
             yAnchor: 0,
-            zIndex: 3  
-        });      
+            zIndex: 3
+        });
     }
 }
-	
+
 function displayCircleDot(position) {
 
     var circleOverlay = new kakao.maps.CustomOverlay({
@@ -476,10 +433,10 @@ function displayCircleDot(position) {
     circleOverlay.setMap(map);
 
 }
-	
-	
-	
-	
+
+
+
+
 function getTimeHTML(distance) {
 
     // 도보의 시속은 평균 4km/h 이고 도보의 분속은 67m/min입니다
@@ -517,9 +474,9 @@ function getTimeHTML(distance) {
 
     return content;
 }
-	
-    
-    
+
+
+
 </script>
 </body>
 </html>
